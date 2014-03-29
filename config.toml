@@ -1,0 +1,99 @@
+baseurl = "/"
+contentdir    = "content"
+layoutdir     = "layouts"
+publishdir    = "public"
+languageCode = "en-US"
+title = "m a r k p i t m a n"
+canonifyurls  = true
+
+DefaultContentLanguage = "en"
+theme = "beautifulhugo"
+
+metaDataFormat = "toml"
+pygmentsUseClasses = true
+pygmentCodeFences = true
+disqusShortname = "pitman"
+googleAnalytics = "UA-209542-2"
+
+[Params]
+  subtitle = "'After three days without programming, life becomes meaningless.' - The Tao of Programming"
+#   logo = "img/avatar-icon.png"
+  logo = "images/me.jpeg"
+  favicon = "img/favicon.ico"
+  dateFormat = "January 2, 2006"
+  commit = false
+  rss = true
+  comments = true
+ gcse = "007577146470743800336:dogireevc-8" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+
+#[[Params.bigimg]]
+#  src = "img/triangle.jpg"
+#  desc = "Triangle"
+#[[Params.bigimg]]
+#  src = "img/sphere.jpg"
+#  desc = "Sphere"
+#[[Params.bigimg]]
+#  src = "img/hexagon.jpg"
+#  desc = "Hexagon"
+
+[Author]
+  name = "Mark Pitman"
+#   email = "youremail@domain.com"
+#   facebook = "username"
+  googleplus = "+MarkPitman0" # or xxxxxxxxxxxxxxxxxxxxx
+  gitlab = "mapitman"
+  github = "mapitman"
+  hackernews = "MarkPitman"
+  twitter = "markapitman"
+  reddit = "MarkPitman"
+  keybase = "markpitman"
+  linkedin = "markapitman"
+#   xing = "username"
+  stackoverflow = "users/4500781/MarkPitman"
+#   snapchat = "username"
+#   instagram = "username"
+#   youtube = "user/username" # or channel/channelname
+#   soundcloud = "username"
+#   spotify = "username"
+#   bandcamp = "username"
+#   itchio = "username"
+  bio = "Father, husband, developer. C# developer since the beginning, but dabbling in Go, Node and Python lately."
+
+
+# [[menu.main]]
+#     name = "Blog"
+#     url = ""
+#     weight = 1
+
+# [[menu.main]]
+#     name = "About"
+#     url = "page/about/"
+#     weight = 3
+
+# [[menu.main]]
+#     identifier = "samples"
+#     name = "Samples"
+#     weight = 2
+
+# [[menu.main]]
+#     parent = "samples"
+#     name = "Big Image Sample"
+#     url = "post/2017-03-07-bigimg-sample"
+#     weight = 1
+
+# [[menu.main]]
+#     parent = "samples"
+#     name = "Math Sample"
+#     url = "post/2017-03-05-math-sample"
+#     weight = 2
+
+# [[menu.main]]
+#     parent = "samples"
+#     name = "Code Sample"
+#     url = "post/2016-03-08-code-sample"
+#     weight = 3
+
+# [[menu.main]]
+#     name = "Tags"
+#     url = "tags"
+#     weight = 3

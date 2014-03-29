@@ -1,0 +1,10 @@
++++
+date = "2004-07-20T01:31:00-07:00"
+draft = false
+title = "New Laptop"
+slug = "new-laptop"
+aliases = [
+	"new-laptop"
+]
++++
+I've had a laptop supplied through work for a while now. When I recently switched jobs, that wasn't part of the deal, so I decided to buy one myself. I have become too used to being able to take a computer with me when I go on vacation or to visit relatives, etc. Plus it's nice to be able to sit in any room in the house and use it.<br /> <br /> I bought an <a target="_blank" href="http://www.shopping.hp.com/webapp/shopping/computer_series.do?storeName=computer_store&amp;category=notebooks/compaq_presario&amp;series_name=R3000Td_series&amp;catLevel=2&amp;tab_switch=true&amp;tab=specs">HP Compaq Presario R3000T</a>. I have had it for a week and I am <i>very </i>happy with it. I ordered it through <a target="_blank" href="http://www.costco.com">Costco.com</a>. When you order through them, you get to customize it. I chose:<br /> <ul> <li>Pentium 4 3.4GHz w/HT</li> <li>WinXp Pro</li> <li>1.0 GB RAM</li> <li>80 GB 5400 RPM Hard Drive</li> <li>128MB ATI Mobility Radeon 9600</li> <li>15.4" WVA WUXGA Display (1920x1200)</li> <li>Broadcom 802.11b/g WLAN &amp; Bluetooth</li> <li>DVD/CD-RW Combo Drive</li> </ul>It ended up being about $2200. Not bad, I wasn't able to find anything with similar specs for the same price on IBM, Toshiba or Dell's sites. Apparently, this model has the same guts as the HP Pavillion zx5000, so if you like the case better on that, it is about the same price.<br /> <br /> I've installed Visual Studio .NET 2003 and 2005, SQL Server Express, etc. and it runs everything great. No problems so far. Just one oddity though. Every driver was installed except for the Bluetooth driver. I find it strange that HP installed every other driver, but didn't install the Bluetooth driver. It wasn't an oversight either; the documentation talks about installing the Bluetooth driver as the first step in getting started using the Bluetooth functionality.&nbsp; Go figure.<br /> <br />

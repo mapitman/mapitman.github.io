@@ -1,0 +1,72 @@
+==================================================================
+https://keybase.io/markpitman
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://pitman.bz
+  * I am markpitman (https://keybase.io/markpitman) on keybase.
+  * I have a public key with fingerprint 9800 3095 BE42 CE16 CA61  FCC2 A4FA 7F2D 49BA EB9D
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "client": {
+            "name": "keybase.io node.js client",
+            "version": "0.8.22"
+        },
+        "key": {
+            "eldest_kid": "01016b7ea59f6e22db352c8260a11343442763e4cb2ac67dcf69920a4270ff6299540a",
+            "fingerprint": "98003095be42ce16ca61fcc2a4fa7f2d49baeb9d",
+            "host": "keybase.io",
+            "key_id": "a4fa7f2d49baeb9d",
+            "kid": "01016b7ea59f6e22db352c8260a11343442763e4cb2ac67dcf69920a4270ff6299540a",
+            "uid": "73a914ed411902bef8c5edd803bbba00",
+            "username": "markpitman"
+        },
+        "service": {
+            "hostname": "pitman.bz",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1445317619,
+    "expire_in": 157680000,
+    "prev": "444074d46756b546c2a778fc92003389752e95d6a4fcd91a73b44513fc691a77",
+    "seqno": 11,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owGtkl9oFEccx+/OqElAY6RFBcFjxZY0uXN2d3Z2N+Ifokgi1H9gAwpeZ2Znz00u
+u+fuJnqGRHwQUePfNiUq+pQEqxZRkNbEYkBaiZa0VH1IKKWWNkGSICEPmsaKM/H6
+UPDRt5nffH7f+f6+M6fnzYrEop3/HEzU9IxejD58RiKfrXg42SwRz8pJlc0SzTjM
+DcXKxQ1MqpTqWY7ggCUdL+56FkvWBfE8UyE1MT9wPJdTIGkkFUVqqRC86GYZiwVh
+qt6xxKkMZER0hjXTRkxRLKJqCjUUBLAsq1CFUNGRyiAlCqZIt6iNTFMBmJeBbSPF
+NDUIML/Qdtw087O+IyxKpgGACkyNMKhQJiOKkWxTqmBoY91WLGgSzIhp8cY9XhD+
+bxhpxmlqxt47+Pfsu3FGTlexKUNmQVk2gUKYbVCNWZYBVEIIBkCAAfPzwTdgvz7r
+hA3YFbHyepNDmYhWzJJn3p4nyQHemvW90KNehpf3hGE2qBRtYS4ruH2MpPIKKeK4
+Fo8x/3wdM+8nc5SGjtCUIdRUWUeyWSGx/VnHZylHEJqOeNwAiItYE9eEEAIdWhDp
+GiIaRDx3XTdsygMAqmqYuqYwU7MQT5dapox1lXBpWbUpEjtdEkPtdT2uLXOjOM01
+Ayft4rDRZ1LL0ejSgkg0FpkzOyZ+aKS4aMF/3/a7K4WRU9EyY+U3022fX7/0fffg
+k7tTh8u/vn7mA3J8oratb93CoUXtJdt6b21ZM+Iq98DVwt6zQ992t/ZHx+6v7L/V
+/KCnITfV1Vo0cR6lB1/WbvotscW8ejJ+c8nyn6dG1yfcc7UnM8divz/aMNj7oCDT
+0t5pry5++qqm7H57aeur8ccLup58FOv7tMTfXDBc49pbE2OfdKh/ntud++LpQMnt
+oem5sdeLdkb/7nie1stbE/XFhX/t2thX+++NnXB4V1nQU0V//aFu3sCFuprqPxI/
+TcxJOtsPXZ5/dKR6oFS9vepe/PwvQy+nq/1ld14UfLXjw/imLz++O2mMH6r6MZh1
+Yu21y0cW908kpt4A
+=yNtY
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/markpitman
+
+==================================================================
