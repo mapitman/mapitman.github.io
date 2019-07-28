@@ -10,8 +10,8 @@ DefaultContentLanguage = "en"
 theme = "beautifulhugo"
 
 metaDataFormat = "toml"
+pygmentsCodeFences = true
 pygmentsUseClasses = true
-pygmentCodeFences = true
 disqusShortname = "pitman"
 googleAnalytics = "UA-209542-2"
 
