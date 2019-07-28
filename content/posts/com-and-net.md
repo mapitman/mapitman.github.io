@@ -72,5 +72,5 @@ For example:
 ```c#
 ComUtils.Release(outlookMailItem, outlookNameSpace, outlookApplication);
 ```
-I haven't tried it, but I assume the same thing applies to 
+I haven't tried it, but I assume the same thing applies to
 automating Excel or Word too.
