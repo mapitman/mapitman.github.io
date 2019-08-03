@@ -8,7 +8,7 @@ aliases = [
 	"firewall-rules-with-ufw"
 ]
 +++
-UFW is _Uncomplicated Firewall_. It's an easy way to setup iptables firewall rules on your Linux system. If it's not already installed, it can be installed on Debian-based systems (like Ubuntu) like this:
+UFW is _Uncomplicated Firewall_. It is an easy way to setup iptables firewall rules on your Linux system. If it is not already installed, it can be installed on Debian-based systems (like Ubuntu) like this:
 
     sudo apt-get install ufw
 

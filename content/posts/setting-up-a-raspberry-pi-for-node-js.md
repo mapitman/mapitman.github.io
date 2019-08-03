@@ -1,7 +1,7 @@
 +++
 date = "2015-04-01T23:22:35-07:00"
 draft = false
-title = "Setting up a Raspberry Pi 1 B+ for Node.js Development"
+title = "Setting up a Raspberry Pi for Node.js Development"
 slug = "setting-up-a-raspberry-pi-for-node-js"
 image = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Raspberry_Pi_B%2B_top.jpg"
 aliases = [
