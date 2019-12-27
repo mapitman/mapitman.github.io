@@ -5,6 +5,7 @@ publishdir    = "public"
 languageCode = "en-US"
 title = "m a r k p i t m a n"
 canonifyurls  = true
+mainSections = "posts"
 
 DefaultContentLanguage = "en"
 theme = "beautifulhugo"
