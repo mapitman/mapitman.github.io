@@ -1,9 +1,9 @@
-+++
-title = "Build Hugo Sites with Docker"
-draft = false
-date = "2016-09-26T20:19:26-07:00"
-image = "./images/gitlab.png"
-+++
+---
+title: "Build Hugo Sites with Docker"
+draft: false
+date: "2016-09-26T20:19:26-07:00"
+image: "./images/gitlab.png"
+---
 
 I use [Hugo](https://gohugo.io/) to create and build this website and run it in a [Docker](https://www.docker.com/) container. I was managing it all manually and wanted to make it more automatic. My last platform was Ghost and I really liked that I could post with minimal effort and fuss.  
 

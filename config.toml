@@ -5,7 +5,7 @@ publishdir    = "public"
 languageCode = "en-US"
 title = "m a r k p i t m a n"
 canonifyurls  = true
-mainSections = "posts"
+mainSections = ["posts"]
 
 DefaultContentLanguage = "en"
 theme = "beautifulhugo"
@@ -15,6 +15,7 @@ pygmentsCodeFences = true
 pygmentsUseClasses = true
 disqusShortname = "pitman"
 googleAnalytics = "UA-209542-2"
+enableGitInfo = true
 
 [Params]
   subtitle = "'After three days without programming, life becomes meaningless.' - The Tao of Programming"
@@ -22,10 +23,10 @@ googleAnalytics = "UA-209542-2"
   logo = "images/me.jpeg"
   favicon = "img/favicon.ico"
   dateFormat = "January 2, 2006"
-  commit = false
   rss = true
   comments = true
- gcse = "007577146470743800336:dogireevc-8" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+  gcse = "007577146470743800336:dogireevc-8" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+  commit = "https://gitlab.com/mapitman/mapitman.gitlab.io/tree/"
 
 #[[Params.bigimg]]
 #  src = "img/triangle.jpg"

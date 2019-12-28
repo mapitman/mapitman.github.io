@@ -1,9 +1,8 @@
 ---
-title: "No Wifi Access After Resume From Sleep"
+title: "No Wifi Access After Resume From Sleep on Linux"
 date: 2019-12-27T15:07:21-06:00
 draft: false
 ---
-
 
 i've recently been having problems with my WiFi connection after my
 laptop comes out of sleep mode. After resuming, the NetworkManager
