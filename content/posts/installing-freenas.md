@@ -1,9 +1,9 @@
-+++
-date = "2016-11-27T19:30:00-08:00"
-draft = false
-title = "Installing FreeNAS on an HP EX485 MediaSmart Server"
+---
+date: "2016-11-27T19:30:00-08:00"
+draft: false
+title: "Installing FreeNAS on an HP EX485 MediaSmart Server"
 
-+++
+---
 
 I bought an [HP EX485 MediaSmart Server](https://en.wikipedia.org/wiki/HP_MediaSmart_Server) years ago. I was working at Microsoft at the time and it ran Windows Home Server, so I thought I should support the home team and try it out. It worked well for storing photos, home videos, etc. When the next version of Windows Home Server was released, I upgraded. Eventually I left Microsoft and Microsoft stopped supporting Home Server. I've always been somewhat of a Linux enthusiast, so I figured installing Linux on it would be a good way to get back into Linux again. I kept it running for a year or so, but eventually I needed one of the disks out of it for something else and it sat idle. Lately, I've been hearing a lot about [FreeNAS](http://www.freenas.org/) and I thought maybe I could resurrect this hardware once again.
 

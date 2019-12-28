@@ -1,12 +1,12 @@
-+++
-date = "2004-04-22T06:48:00-07:00"
-draft = false
-title = "Outlook and .Net"
-slug = "outlook-and-net"
-aliases = [
+---
+date: "2004-04-22T06:48:00-07:00"
+draft: false
+title: "Outlook and .Net"
+slug: "outlook-and-net"
+aliases: [
 	"outlook-and-net"
 ]
-+++
+---
 
         <P>If you are developing an addin for Outlook in C# or another .Net language or even just using COM from .Net, you should be cleaning up your COM objects (duh!). But, setting them to null is not enough. You must use the System.Runtime.InteropServices.Marshal.ReleaseComObject method to remove all references to that COM object. Here's a little class that you can use so you don't have to retype the code all over the place.</P><PRE>using System;
 using System.Runtime.InteropServices;

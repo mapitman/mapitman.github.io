@@ -1,13 +1,13 @@
-+++
-date = "2015-05-09T20:41:53-07:00"
-draft = false
-title = "Firewall Rules with UFW"
-slug = "firewall-rules-with-ufw"
-image = "./images/2015/05/ufw.png"
-aliases = [
+---
+date: "2015-05-09T20:41:53-07:00"
+draft: false
+title: "Firewall Rules with UFW"
+slug: "firewall-rules-with-ufw"
+image: "./images/2015/05/ufw.png"
+aliases: [
 	"firewall-rules-with-ufw"
 ]
-+++
+---
 UFW is _Uncomplicated Firewall_. It is an easy way to setup iptables firewall rules on your Linux system. If it is not already installed, it can be installed on Debian-based systems (like Ubuntu) like this:
 
     sudo apt-get install ufw

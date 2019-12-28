@@ -1,13 +1,13 @@
-+++
-date = "2013-07-19T07:59:50-07:00"
-draft = false
-title = "Changing Default Colors in Git and Posh-Git"
-slug = "changing-default-colors-in-git-and-posh-git"
-image = "./images/2015/04/Git-Logo-2Color.jpg"
-aliases = [
+---
+date: "2013-07-19T07:59:50-07:00"
+draft: false
+title: "Changing Default Colors in Git and Posh-Git"
+slug: "changing-default-colors-in-git-and-posh-git"
+image: "./images/2015/04/Git-Logo-2Color.jpg"
+aliases: [
 	"changing-default-colors-in-git-and-posh-git"
 ]
-+++
+---
 ## Git
 In Git, _color.status.changed_, _color.status.untracked_ and _color.branch.remote_, default to red on normal (whatever your console background color is). This can be difficult to read. You can change them using:
 ```

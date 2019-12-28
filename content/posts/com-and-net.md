@@ -1,12 +1,12 @@
-+++
-date = "2005-04-02T08:17:06-08:00"
-draft = false
-title = "COM and .NET"
-slug = "com-and-net"
-aliases = [
+---
+date: "2005-04-02T08:17:06-08:00"
+draft: false
+title: "COM and .NET"
+slug: "com-and-net"
+aliases: [
   "com-and-net"
 ]
-+++
+---
 If you are developing an addin for Outlook in C# or another .Net
 language, automating Outlook or even just using COM from .Net, you
 should be cleaning up your COM objects (duh!). But, setting them to null

@@ -1,9 +1,9 @@
-+++
-date = "2015-09-08T22:35:08-07:00"
-draft = false
-title = "Setting Up Linux on a MacBook Pro"
-image="./images/logobig.jpg"
-+++
+---
+date: "2015-09-08T22:35:08-07:00"
+draft: false
+title: "Setting Up Linux on a MacBook Pro"
+image: "./images/logobig.jpg"
+---
 
 _*Updated Sep 15, 2015_  
   

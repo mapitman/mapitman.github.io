@@ -1,13 +1,13 @@
-+++
-date = "2015-04-01T23:22:35-07:00"
-draft = false
-title = "Setting up a Raspberry Pi for Node.js Development"
-slug = "setting-up-a-raspberry-pi-for-node-js"
-image = "https://upload.wikimedia.org/wikipedia/commons/6/6f/Raspberry_Pi_B%2B_top.jpg"
-aliases = [
+---
+date: "2015-04-01T23:22:35-07:00"
+draft: false
+title: "Setting up a Raspberry Pi for Node.js Development"
+slug: "setting-up-a-raspberry-pi-for-node-js"
+image: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Raspberry_Pi_B%2B_top.jpg"
+aliases: [
 	"setting-up-a-raspberry-pi-for-node-js"
 ]
-+++
+---
 I bought a Raspberry Pi Model B+ back in December. I didn't have a monitor to plug it into so it just kind of sat idle for a while.
 
 I recently picked up a new monitor so I've been tinkering with the Raspberry Pi and I wanted to capture all of my setup and configuration.

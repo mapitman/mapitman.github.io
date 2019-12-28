@@ -1,9 +1,9 @@
-+++
-date = "2015-07-27T22:01:31-07:00"
-draft = false
-title = "How to Get Media Keys Working for Google Music in Chrome"
-image = "./images/google-music.png"
-+++
+---
+date: "2015-07-27T22:01:31-07:00"
+draft: false
+title: "How to Get Media Keys Working for Google Music in Chrome"
+image: "./images/google-music.png"
+---
 
 Having problems getting your media keys working with Google Music in Chrome? The first thing to check is in Settings &raquo; Extensions and then scroll to the bottom of the page, then click on _Keyboard Shortcuts_. 
 ![Keyboard options screenshot](/images/google-music-keyboard-options.png)

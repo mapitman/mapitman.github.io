@@ -1,9 +1,9 @@
-+++
-date = "2015-07-05T17:39:12-07:00"
-draft = false
-title = "Setting Up a New Linux Environment"
-image="./images/logobig.jpg"
-+++
+---
+date: "2015-07-05T17:39:12-07:00"
+draft: false
+title: "Setting Up a New Linux Environment"
+image: "./images/logobig.jpg"
+---
 
 I find myself setting up Linux VMs quite often and I always dread getting my environment set up how I want it. Yesterday, I installed Linux on my Macbook and decided it was time to automate as much as possible. I had some notes that I was using to make sure I didn't miss anything when I did it manually, so I used that to build a script.  
 
