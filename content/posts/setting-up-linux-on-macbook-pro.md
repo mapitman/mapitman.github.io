@@ -5,8 +5,8 @@ title: "Setting Up Linux on a MacBook Pro"
 image: "./images/logobig.jpg"
 ---
 
-_*Updated Sep 15, 2015_  
-  
+_*Updated Sep 15, 2015_
+
 I have been using OS X for about a year and a half now. When I bought my MacBook, I was switching from Windows because I wasn't really happy with Windows 8 and I have always used some sort of Linux or BSD off and on in the past. I figured if I really missed it, I could always switch back to Windows or at least dual boot. I had Windows installed through BootCamp and also running in Parallels, but I found I was not using it much. In fact, I was not really using any apps that were specific to OS X either so I decided I'd try running Linux full time. I've been a .NET developer for quite a while, so leaving Windows behind was always difficult. I've broken out of just doing .NET development lately and doing some Javascript (Node), Golang and Python programming which makes me feel more at ease that I'll be able to write some code on Linux.
 
 Let's get started!
@@ -200,4 +200,7 @@ exit 0
 
 
 ## All Done
-That's it for now. I will update this as I find more tweaks. Take a look at my post on [setting up your environment](../setting-up-linux-environment) for some more customizations.
+That's it for now. I will update this as I find more tweaks. Take a l
+ook at my post on
+[setting up your environment](../setting-up-linux-environment) for some
+ more customizations.
