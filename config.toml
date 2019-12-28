@@ -15,7 +15,7 @@ pygmentsCodeFences = true
 pygmentsUseClasses = true
 disqusShortname = "pitman"
 googleAnalytics = "UA-209542-2"
-enableGitInfo = true
+enableGitInfo = false
 
 [Params]
   subtitle = "'After three days without programming, life becomes meaningless.' - The Tao of Programming"
