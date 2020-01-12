@@ -21,7 +21,7 @@ the WiFi adapter. It ended up being `iwldvm` for my Lenovo Thnkpad Carbon X1 Gen
 
 You can see all the related modules below:
 
-```
+```sh
 mark@localhost:~$ lsmod | grep iwldvm
 iwldvm                274432  0
 iwlwifi               323584  1 iwldvm
@@ -29,12 +29,13 @@ mac80211              974848  1 iwldvm
 cfg80211              835584  3 iwldvm,iwlwifi,mac80211
 
 ```
+
 To automate the unload/load of the kernel module, create a file named
 `/lib/systemd/system-sleep/iwldvm.sh`
 
 Add the following to the file:
 
-```
+```sh
 #!/bin/sh
 
 # /lib/systemd/system-sleep/iwldvm.sh
@@ -53,6 +54,8 @@ case $1 in
 esac
 ```
 
-This was on Fedora 31 with kernel 5.3.16, but I had the same problem
-on Ubuntu 19.10. I'm pretty sure the file goes in the same place on Ubuntu.
+```sh
+sudo chmod 755 /lib/systemd/system-sleep/iwldvm.sh
+```
 
+This was on Fedora 31 with kernel 5.3.16.
