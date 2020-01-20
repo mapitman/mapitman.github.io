@@ -36,7 +36,7 @@ The next thing I did was edit `/etc/systemd/sleep.conf`. There are a number of
 commented lines, and the values are what is compiled in as defaults. I changed
 the following line:
 
-```sh
+```
 HibernateDelaySec=1800
 ```
 
@@ -45,7 +45,7 @@ goes to sleep.
 
 The final file that needed to be changed was `/etc/systemd/logind.conf`
 
-```sh
+```
 HandleLidSwitch=suspend-then-hibernate
 HandleLidSwitchExternalPower=suspend-then-hibernate
 ```
@@ -53,6 +53,7 @@ HandleLidSwitchExternalPower=suspend-then-hibernate
 That allows the system to enter hibernation after sleeping for the configured
 amount of time. The setting will take effect after a reboot or you can run the
 following command. Be aware, you will be immediately logged out when you run it!
+
 ```sh
 sudo systemctl restart systemd-logind.service
 ```
