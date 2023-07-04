@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://pitman.io/"
 contentdir    = "content"
 layoutdir     = "layouts"
 publishdir    = "public"
