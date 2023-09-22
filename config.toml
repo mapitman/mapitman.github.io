@@ -1,4 +1,4 @@
-baseurl = "https://pitman.io/"
+baseurl = "https://mapitman.github.io/"
 contentdir    = "content"
 layoutdir     = "layouts"
 publishdir    = "public"
