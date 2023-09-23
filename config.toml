@@ -26,7 +26,7 @@ enableGitInfo = false
   rss = true
   comments = true
   gcse = "007577146470743800336:dogireevc-8" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
-  commit = "https://gitlab.com/mapitman/mapitman.gitlab.io/tree/"
+  commit = "https://github.com/mapitman/mapitman.github.io"
 
 #[[Params.bigimg]]
 #  src = "img/triangle.jpg"
@@ -42,7 +42,6 @@ enableGitInfo = false
   name = "Mark Pitman"
 #   email = "youremail@domain.com"
 #   facebook = "username"
-  googleplus = "+MarkPitman0" # or xxxxxxxxxxxxxxxxxxxxx
   gitlab = "mapitman"
   github = "mapitman"
   hackernews = "MarkPitman"
