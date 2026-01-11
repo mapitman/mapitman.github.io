@@ -258,6 +258,96 @@
             display: none;
         }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .history-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .history-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-date {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .history-score {
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .history-score.passed {
+            background: #4caf50;
+            color: white;
+        }
+
+        .history-score.failed {
+            background: #f44336;
+            color: white;
+        }
+
+        .clear-history-btn {
+            background: #6c757d;
+            padding: 10px 20px;
+            margin-top: 20px;
+        }
+
+        .clear-history-btn:hover {
+            background: #5a6268;
+        }
+
+        .stats-toggle {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .toggle-btn {
+            background: #667eea;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .toggle-btn:hover {
+            background: #764ba2;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -273,6 +363,19 @@
 
             .score-display {
                 font-size: 3em;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .history-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .history-score {
+                align-self: flex-end;
             }
         }
     </style>
@@ -333,12 +436,43 @@
                 <p><strong>Total Questions:</strong> <span id="totalCount">25</span></p>
             </div>
 
-            <button class="btn" onclick="restartQuiz()">Take Another Quiz</button>
-            
-            <div id="reviewSection" class="review-section">
+            <!-- Stats Grid -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-box">
+                    <div class="stat-value" id="totalQuizzes">0</div>
+                    <div class="stat-label">Total Quizzes</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="bestScore">0%</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="averageScore">0%</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="passRate">0%</div>
+                    <div class="stat-label">Pass Rate</div>
+                </div>
+            </div>
+
+            <div class="stats-toggle">
+                <button class="btn toggle-btn" onclick="toggleReview()">View Answer Review</button>
+                <button class="btn toggle-btn" onclick="toggleHistory()">View Score History</button>
+            </div>
+
+            <div id="reviewSection" class="review-section" style="display: none;">
                 <h3 style="margin-bottom: 20px; color: #333;">Review Your Answers</h3>
                 <div id="reviewContainer"></div>
             </div>
+
+            <div id="historySection" class="history-section" style="display: none;">
+                <h3 style="margin-bottom: 20px; color: #333;">Score History</h3>
+                <div id="historyContainer"></div>
+                <button class="btn btn-secondary clear-history-btn" onclick="clearHistory()">Clear History</button>
+            </div>
+
+            <button class="btn" onclick="restartQuiz()" style="margin-top: 20px;">Take Another Quiz</button>
         </div>
     </div>
 
@@ -864,6 +998,471 @@
                 question: "Trains always have the right-of-way and can take up to how long to stop?",
                 answers: ["100 feet", "500 feet", "1 mile", "2 miles"],
                 correct: 2
+            },
+            {
+                question: "What should you do if you see a 'Do Not Enter' sign?",
+                answers: ["Proceed carefully", "Turn around immediately", "Honk and proceed", "Yield to other vehicles"],
+                correct: 1
+            },
+            {
+                question: "A 'Wrong Way' sign means:",
+                answers: ["You're in a construction zone", "You're driving in the wrong direction", "The road is one-way", "Proceed with caution"],
+                correct: 1
+            },
+            {
+                question: "When is it legal to back up on a freeway?",
+                answers: ["Never", "In emergencies only", "If traffic allows", "To exit on the right"],
+                correct: 0
+            },
+            {
+                question: "What is the maximum speed limit on most Washington highways?",
+                answers: ["50 mph", "55 mph", "60 mph", "70 mph"],
+                correct: 2
+            },
+            {
+                question: "When you see yellow center line markings, traffic is:",
+                answers: ["Going in the same direction", "Going in opposite directions", "All turning", "Parked"],
+                correct: 1
+            },
+            {
+                question: "A dashed yellow line means:",
+                answers: ["No passing zone", "Passing allowed", "Center lane", "One-way traffic"],
+                correct: 1
+            },
+            {
+                question: "Double yellow centerlines mean:",
+                answers: ["You can pass in either direction", "Neither direction can pass", "Center lane only", "Passing allowed on dashes"],
+                correct: 1
+            },
+            {
+                question: "What color are warning signs in Washington?",
+                answers: ["Red", "Yellow", "Orange", "Green"],
+                correct: 1
+            },
+            {
+                question: "What do blue signs indicate?",
+                answers: ["Warning", "Regulatory", "Motorist services", "Recreation"],
+                correct: 2
+            },
+            {
+                question: "Brown signs typically indicate:",
+                answers: ["Construction", "Recreation and historical areas", "Speed limits", "Stop signs"],
+                correct: 1
+            },
+            {
+                question: "What does a rectangular green sign indicate?",
+                answers: ["Caution", "Guide or directional information", "No passing zone", "Speed limit"],
+                correct: 1
+            },
+            {
+                question: "An orange sign typically indicates:",
+                answers: ["Warning", "Construction or maintenance", "School zone", "Emergency"],
+                correct: 1
+            },
+            {
+                question: "What does a 'Yield' sign mean?",
+                answers: ["Stop and wait", "Slow down and let others cross", "You have the right-of-way", "Merge into traffic"],
+                correct: 1
+            },
+            {
+                question: "The purpose of a 'Keep Right' sign is:",
+                answers: ["To restrict left turns", "To remind you to stay in the right lane unless passing", "To indicate a divided highway", "To mark the edge of the road"],
+                correct: 1
+            },
+            {
+                question: "What does an automated traffic safety camera ticket indicate?",
+                answers: ["You were speeding", "You ran a red light or exceeded speed limit", "You were following too closely", "You failed to signal"],
+                correct: 1
+            },
+            {
+                question: "A variable speed limit sign means:",
+                answers: ["Speed changes randomly", "Digital signs post changing speeds to manage traffic flow", "Weather affects speed", "You can ignore it"],
+                correct: 1
+            },
+            {
+                question: "What does a 'No Passing Zone' sign indicate?",
+                answers: ["You cannot change lanes", "Passing other vehicles is not allowed", "You must stay in one lane", "Two-way traffic ahead"],
+                correct: 1
+            },
+            {
+                question: "A shared center left turn lane can be used for:",
+                answers: ["Through traffic only", "Left turns in either direction and U-turns", "Passing only", "Buses only"],
+                correct: 1
+            },
+            {
+                question: "When entering a roundabout, you should enter in which lane based on your exit?",
+                answers: ["Any lane that's available", "The lane indicated by lane choice signs", "The left lane for all exits", "The right lane for all exits"],
+                correct: 1
+            },
+            {
+                question: "What is a 'Diverging Diamond' intersection?",
+                answers: ["A complex four-way stop", "A special interchange allowing free-flow left turns", "A roundabout variation", "A diamond-shaped road"],
+                correct: 1
+            },
+            {
+                question: "In a diverging diamond, you will:",
+                answers: ["Stay in the same lane", "Cross to the opposite side of the road", "Always turn left", "Make a U-turn"],
+                correct: 1
+            },
+            {
+                question: "What does a traffic calming circle look like?",
+                answers: ["A full roundabout", "A painted center island with traffic flowing counterclockwise", "A stop sign intersection", "A yield sign intersection"],
+                correct: 1
+            },
+            {
+                question: "At an uncontrolled intersection, you should yield to:",
+                answers: ["Vehicles on your left", "The first vehicle to arrive", "Vehicles already in the intersection", "All of the above"],
+                correct: 3
+            },
+            {
+                question: "A 'No Turn on Red' sign means:",
+                answers: ["You can turn if traffic is clear", "You cannot turn right when light is red", "You must wait for green arrow", "Turns are prohibited all times"],
+                correct: 1
+            },
+            {
+                question: "What does a green arrow traffic signal mean?",
+                answers: ["Caution and yield to others", "You have right-of-way in that direction", "You can proceed when safe", "Pedestrians can walk"],
+                correct: 1
+            },
+            {
+                question: "When can you use a yellow center lane with left turn arrows?",
+                answers: ["For through traffic", "Only when solid yellow is on your side", "For U-turns when permitted", "For passing vehicles"],
+                correct: 2
+            },
+            {
+                question: "What does a red curb marking indicate?",
+                answers: ["Fire lane - no parking or stopping", "Loading zone", "Short-term parking", "Handicap parking"],
+                correct: 0
+            },
+            {
+                question: "A yellow curb indicates:",
+                answers: ["No parking", "Loading zone", "Fire lane", "Short stops only"],
+                correct: 1
+            },
+            {
+                question: "What is a crosswalk?",
+                answers: ["A street intersection", "A designated path for pedestrians to cross", "A bike path", "A rest area"],
+                correct: 1
+            },
+            {
+                question: "Pedestrians in crosswalks have the right-of-way:",
+                answers: ["Only at marked crosswalks", "Only when a walk signal shows", "At all crosswalks, marked or unmarked", "Never unless light is green"],
+                correct: 2
+            },
+            {
+                question: "What are in-pavement lights in crosswalks?",
+                answers: ["Decorative lighting", "Safety lights activated by crossing pedestrians", "Lane markings", "Warning systems"],
+                correct: 1
+            },
+            {
+                question: "A bike lane buffer with diagonal lines means:",
+                answers: ["You can drive there if needed", "It's part of the bike lane and should not be entered", "It separates two bike lanes", "It marks a turning area"],
+                correct: 1
+            },
+            {
+                question: "Sharrow markings indicate:",
+                answers: ["A bike-only lane", "A vehicle lane is shared with bicycles", "No bicycles allowed", "A safe passing zone"],
+                correct: 1
+            },
+            {
+                question: "When you see a sharrow, you should:",
+                answers: ["Never drive in that lane", "Drive slowly and give 3 feet space to cyclists", "Honk to warn cyclists", "Pass quickly"],
+                correct: 1
+            },
+            {
+                question: "A bicycle box is:",
+                answers: ["A bike parking area", "An area in front of vehicles where bikes wait at intersections", "A bike repair station", "A bike storage unit"],
+                correct: 1
+            },
+            {
+                question: "At a bicycle box, you should:",
+                answers: ["Drive through immediately", "Wait behind the white line until box is clear", "Park your car there", "Honk at cyclists"],
+                correct: 1
+            },
+            {
+                question: "You cannot turn right on red near a bicycle box when:",
+                answers: ["It's raining", "The box contains bicycles", "Anytime - it's prohibited", "During rush hour"],
+                correct: 2
+            },
+            {
+                question: "What does a toll lane marked with a diamond symbol indicate?",
+                answers: ["Bus lane", "HOV/Carpool or toll-paying lane", "Passing lane", "Emergency lane"],
+                correct: 1
+            },
+            {
+                question: "A solid white line separating lanes means:",
+                answers: ["You can change lanes", "You should not change lanes", "Lane change recommended", "Use with caution"],
+                correct: 1
+            },
+            {
+                question: "A dashed white line between lanes means:",
+                answers: ["You cannot cross it", "You can cross it if safe", "It marks the edge", "Reserved lane"],
+                correct: 1
+            },
+            {
+                question: "A reversible lane marked with double dashed white lines changes direction when:",
+                answers: ["Weather changes", "Overhead signs show green arrow or red X", "Traffic increases", "Time of day changes"],
+                correct: 1
+            },
+            {
+                question: "When you see a steady yellow X in a reversible lane, you should:",
+                answers: ["Speed up", "Move out of the lane safely", "Stop in the lane", "Turn around"],
+                correct: 1
+            },
+            {
+                question: "What does Good To Go! refer to in Washington?",
+                answers: ["A traffic app", "An account system for paying tolls", "A driving school", "A traffic signal"],
+                correct: 1
+            },
+            {
+                question: "Express toll lanes in Washington benefit:",
+                answers: ["Solo drivers only", "Buses, vanpools, carpools, motorcycles, and paying drivers", "Emergency vehicles only", "Trucks only"],
+                correct: 1
+            },
+            {
+                question: "Yellow stripes on the road mean:",
+                answers: ["Caution area", "You cannot drive there", "Loading zone", "One-way traffic"],
+                correct: 1
+            },
+            {
+                question: "A fire lane is typically marked with:",
+                answers: ["Yellow lines", "Red stripes or red curb", "White lines", "Blue stripes"],
+                correct: 1
+            },
+            {
+                question: "What is a stop line?",
+                answers: ["The line where you park", "A line showing where you must stop at signs/signals", "A center line", "An edge line"],
+                correct: 1
+            },
+            {
+                question: "Before entering an intersection, you should check:",
+                answers: ["Mirrors only", "For pedestrians and other traffic", "Your phone for directions", "Your gas gauge"],
+                correct: 1
+            },
+            {
+                question: "When approaching an intersection, you can see crossing traffic is blocked. You should:",
+                answers: ["Proceed through", "Edge forward slowly to see", "Stop and wait", "Back up"],
+                correct: 1
+            },
+            {
+                question: "At a T-intersection, the through road has the:",
+                answers: ["Same priority as connecting road", "Right-of-way", "No priority", "Lower priority"],
+                correct: 1
+            },
+            {
+                question: "A Y-intersection involves:",
+                answers: ["Three-way stop", "A minor road connecting to a major road", "Four directions", "Roundabout"],
+                correct: 1
+            },
+            {
+                question: "When is a mid-block crossing used?",
+                answers: ["At intersections only", "In the middle of a roadway block", "For emergency vehicles", "For buses only"],
+                correct: 1
+            },
+            {
+                question: "At mid-block crossings, pedestrians:",
+                answers: ["Must yield to traffic", "Have right-of-way", "Should run quickly", "Wait for signal"],
+                correct: 1
+            },
+            {
+                question: "What should you do when you see a truck apron in a roundabout?",
+                answers: ["Drive on it normally", "Give large vehicles space as they use both lanes", "Park there", "Avoid it completely"],
+                correct: 1
+            },
+            {
+                question: "Bicyclists in roundabouts can:",
+                answers: ["Only drive through", "Navigate as vehicle or pedestrian", "Must yield", "Cannot enter"],
+                correct: 1
+            },
+            {
+                question: "What is the recommended speed in a roundabout?",
+                answers: ["Normal highway speed", "15-25 mph", "5-10 mph", "Match surrounding traffic"],
+                correct: 1
+            },
+            {
+                question: "When exiting a roundabout, you should:",
+                answers: ["Accelerate quickly", "Check for pedestrians and bicyclists", "Signal only after exiting", "Change lanes immediately"],
+                correct: 1
+            },
+            {
+                question: "A two-way stop intersection means:",
+                answers: ["All roads have stops", "Some roads have right-of-way", "Turning vehicles must yield to straight traffic", "All vehicles must yield"],
+                correct: 2
+            },
+            {
+                question: "At a four-way stop, if two vehicles arrive simultaneously from different directions:",
+                answers: ["The larger vehicle goes first", "Yield to the vehicle on your right", "You determine who goes", "Take turns"],
+                correct: 1
+            },
+            {
+                question: "When turning left at an intersection, you must yield to:",
+                answers: ["Vehicles going straight", "Oncoming vehicles", "All traffic that has right-of-way", "Pedestrians in your path"],
+                correct: 2
+            },
+            {
+                question: "When turning right at an intersection, you should check:",
+                answers: ["Only mirrors", "For pedestrians and bicyclists on the right", "Only oncoming traffic", "Nothing, you have priority"],
+                correct: 1
+            },
+            {
+                question: "Making a U-turn is illegal:",
+                answers: ["Always", "Never", "When a 'No U-Turn' sign is posted", "Only at night"],
+                correct: 2
+            },
+            {
+                question: "Before making a U-turn, you must have:",
+                answers: ["A special permit", "Clear visibility in all directions", "A passenger witness", "At least two lanes"],
+                correct: 1
+            },
+            {
+                question: "U-turns should NOT be made:",
+                answers: ["At anytime", "On curves or near hilltops", "In parking lots", "Between 6 AM and 6 PM"],
+                correct: 1
+            },
+            {
+                question: "When backing up, you should:",
+                answers: ["Use only mirrors", "Turn your body to see behind you", "Go slowly regardless", "Use backup camera only"],
+                correct: 1
+            },
+            {
+                question: "The safest place to back up is:",
+                answers: ["On the street", "In a large, empty parking lot", "On a highway", "During traffic"],
+                correct: 1
+            },
+            {
+                question: "When backing out of a parking space, you should:",
+                answers: ["Back up quickly", "Check for traffic and move straight back slowly", "Use only mirrors", "Honk first"],
+                correct: 1
+            },
+            {
+                question: "What should you check before opening your car door?",
+                answers: ["Nothing, you own the car", "Your rear and side-view mirrors for approaching cyclists", "Only the driver-side", "Just look once"],
+                correct: 1
+            },
+            {
+                question: "The 'Dutch Reach' is a door-opening technique that:",
+                answers: ["Is faster", "Turns your body and helps you see cyclists", "Locks the door", "Opens the trunk"],
+                correct: 1
+            },
+            {
+                question: "When exiting your vehicle, you should use your:",
+                answers: ["Closest hand", "Hand farthest from the door", "Left hand always", "Both hands"],
+                correct: 1
+            },
+            {
+                question: "It is illegal to leave a child under what age unattended in a vehicle?",
+                answers: ["8 years old", "10 years old", "12 years old", "14 years old"],
+                correct: 2
+            },
+            {
+                question: "It is illegal to leave a child under 16 unattended with the motor:",
+                answers: ["Off only", "Running", "Either running or off", "You can leave them"],
+                correct: 1
+            },
+            {
+                question: "When can you remove animals from a locked vehicle?",
+                answers: ["Never", "After calling police for 1 hour", "Immediately if in danger from heat/cold", "Never, it's trespassing"],
+                correct: 2
+            },
+            {
+                question: "Washington State Ferries are considered:",
+                answers: ["Water transportation only", "Part of the state's marine highway system", "Private transportation", "Not subject to traffic laws"],
+                correct: 1
+            },
+            {
+                question: "Ferry line-cutting is:",
+                answers: ["Allowed if you're in a hurry", "A traffic offense with fines", "Only enforced at certain ferries", "Not prohibited"],
+                correct: 1
+            },
+            {
+                question: "Bicyclists receive priority loading on ferries:",
+                answers: ["Never", "Always", "During peak hours", "Only on certain routes"],
+                correct: 1
+            },
+            {
+                question: "Driving is allowed on ocean beaches in which Washington counties?",
+                answers: ["All counties", "Grays Harbor and Pacific Counties", "No counties allow it", "King County only"],
+                correct: 1
+            },
+            {
+                question: "Beach driving speed limit is:",
+                answers: ["35 mph", "25 mph", "15 mph", "No limit"],
+                correct: 1
+            },
+            {
+                question: "On beaches where driving is allowed, you can only drive on:",
+                answers: ["Any sand", "Hard-packed sand through marked approaches", "Soft sand", "Anywhere accessible"],
+                correct: 1
+            },
+            {
+                question: "What is an emergency zone?",
+                answers: ["Hospital area", "A roadside area responding to crashes/breakdowns", "Police station zone", "School zone"],
+                correct: 1
+            },
+            {
+                question: "In an emergency zone with flashing lights, you must:",
+                answers: ["Pass quickly", "Move over or slow to at least 10 mph below limit", "Honk and proceed", "Stop completely"],
+                correct: 1
+            },
+            {
+                question: "Maximum speed in an emergency zone is:",
+                answers: ["35 mph", "40 mph", "50 mph", "No speed limit"],
+                correct: 2
+            },
+            {
+                question: "Roadside response vehicles include:",
+                answers: ["Ambulances only", "Tow trucks and maintenance vehicles", "Police, fire, ambulances, and support vehicles", "Buses and taxis"],
+                correct: 2
+            },
+            {
+                question: "When parking on a hill with no curb, you should turn wheels:",
+                answers: ["Straight", "Toward center of road", "Toward edge away from road", "Doesn't matter"],
+                correct: 2
+            },
+            {
+                question: "Reserved disabled parking spaces are marked with:",
+                answers: ["Blue signs only", "Access aisles with white stripes", "Red curbs", "Yellow lines"],
+                correct: 1
+            },
+            {
+                question: "The access aisle next to disabled parking must be:",
+                answers: ["Available for parking if needed", "Kept clear", "Used for loading only", "For emergency vehicles"],
+                correct: 1
+            },
+            {
+                question: "A disabled parking placard should NOT be:",
+                answers: ["Displayed on the dashboard", "Hung from rear-view mirror while driving", "Shown when parking", "Kept in the vehicle"],
+                correct: 1
+            },
+            {
+                question: "Parking in an EV charging station when NOT charging is:",
+                answers: ["Allowed temporarily", "Illegal", "Allowed if you're about to charge", "Allowed at night"],
+                correct: 1
+            },
+            {
+                question: "When towing a trailer, you are responsible for:",
+                answers: ["Just driving safely", "Following all manufacturers' agreements and state laws", "Nothing extra", "Minimum requirements only"],
+                correct: 1
+            },
+            {
+                question: "An unsecured load in your vehicle is:",
+                answers: ["Usually okay", "Against the law and extremely dangerous", "Only dangerous at high speeds", "Fine if tied loosely"],
+                correct: 1
+            },
+            {
+                question: "Transporting an animal in a truck bed requires:",
+                answers: ["Nothing", "A protective harness or enclosure", "Permission from DOL", "A special license"],
+                correct: 1
+            },
+            {
+                question: "Transporting animals improperly is considered:",
+                answers: ["A warning", "A misdemeanor under Prevention of Cruelty laws", "Just a traffic violation", "Not illegal"],
+                correct: 1
+            },
+            {
+                question: "When towing, you should know the vehicle's:",
+                answers: ["Color only", "Weight limits, restrictions, and tow capacity", "Year model", "Owner's manual location"],
+                correct: 1
             }
         ];
 
@@ -871,6 +1470,64 @@
         let currentQuestionIndex = 0;
         let userAnswers = [];
         let score = 0;
+
+        // Score tracking functions
+        const STORAGE_KEY = 'waDriverQuizHistory';
+
+        function saveQuizResult(percentage, correctCount, totalCount) {
+            const result = {
+                date: new Date().toLocaleString(),
+                timestamp: Date.now(),
+                percentage: percentage,
+                correct: correctCount,
+                total: totalCount
+            };
+
+            let history = getQuizHistory();
+            history.push(result);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+        }
+
+        function getQuizHistory() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        }
+
+        function calculateStats() {
+            const history = getQuizHistory();
+            
+            if (history.length === 0) {
+                return {
+                    totalQuizzes: 0,
+                    bestScore: 0,
+                    averageScore: 0,
+                    passRate: 0
+                };
+            }
+
+            const bestScore = Math.max(...history.map(h => h.percentage));
+            const averageScore = Math.round(
+                history.reduce((sum, h) => sum + h.percentage, 0) / history.length
+            );
+            const passedCount = history.filter(h => h.percentage >= 80).length;
+            const passRate = Math.round((passedCount / history.length) * 100);
+
+            return {
+                totalQuizzes: history.length,
+                bestScore: bestScore,
+                averageScore: averageScore,
+                passRate: passRate
+            };
+        }
+
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all score history? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                displayHistory();
+                updateStats();
+                alert('Score history has been cleared.');
+            }
+        }
 
         function startQuiz() {
             // Select 25 random questions
@@ -993,6 +1650,9 @@
             const percentage = Math.round((score / currentQuestions.length) * 100);
             document.getElementById('finalScore').textContent = percentage + '%';
 
+            // Save quiz result to localStorage
+            saveQuizResult(percentage, score, currentQuestions.length);
+
             // Display message based on score
             let message = '';
             if (percentage >= 80) {
@@ -1011,8 +1671,78 @@
             document.getElementById('incorrectCount').textContent = currentQuestions.length - score;
             document.getElementById('totalCount').textContent = currentQuestions.length;
 
+            // Update stats
+            updateStats();
+
             // Display review
             displayReview();
+        }
+
+        function updateStats() {
+            const stats = calculateStats();
+            document.getElementById('totalQuizzes').textContent = stats.totalQuizzes;
+            document.getElementById('bestScore').textContent = stats.bestScore + '%';
+            document.getElementById('averageScore').textContent = stats.averageScore + '%';
+            document.getElementById('passRate').textContent = stats.passRate + '%';
+        }
+
+        function displayHistory() {
+            const history = getQuizHistory();
+            const historyContainer = document.getElementById('historyContainer');
+            historyContainer.innerHTML = '';
+
+            if (history.length === 0) {
+                historyContainer.innerHTML = '<p style="color: #666; text-align: center;">No quiz history yet. Take a quiz to see your scores here!</p>';
+                return;
+            }
+
+            // Display in reverse chronological order (newest first)
+            [...history].reverse().forEach((result) => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+
+                const dateSpan = document.createElement('div');
+                dateSpan.className = 'history-date';
+                dateSpan.textContent = result.date;
+
+                const scoreDetails = document.createElement('div');
+                scoreDetails.style.textAlign = 'left';
+                scoreDetails.textContent = `${result.correct}/${result.total} correct`;
+
+                const scoreSpan = document.createElement('div');
+                scoreSpan.className = `history-score ${result.percentage >= 80 ? 'passed' : 'failed'}`;
+                scoreSpan.textContent = result.percentage + '%';
+
+                historyItem.appendChild(dateSpan);
+                historyItem.appendChild(scoreDetails);
+                historyItem.appendChild(scoreSpan);
+                historyContainer.appendChild(historyItem);
+            });
+        }
+
+        function toggleReview() {
+            const reviewSection = document.getElementById('reviewSection');
+            const historySection = document.getElementById('historySection');
+            
+            if (reviewSection.style.display === 'none') {
+                reviewSection.style.display = 'block';
+                historySection.style.display = 'none';
+            } else {
+                reviewSection.style.display = 'none';
+            }
+        }
+
+        function toggleHistory() {
+            const reviewSection = document.getElementById('reviewSection');
+            const historySection = document.getElementById('historySection');
+            
+            if (historySection.style.display === 'none') {
+                historySection.style.display = 'block';
+                reviewSection.style.display = 'none';
+                displayHistory();
+            } else {
+                historySection.style.display = 'none';
+            }
         }
 
         function displayReview() {
