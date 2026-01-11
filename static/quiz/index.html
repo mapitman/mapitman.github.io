@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washington State Driver's License Practice Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-screen h2 {
+            color: #444;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .start-screen p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .quiz-screen {
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .question-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .question h3 {
+            color: #333;
+            font-size: 1.3em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 15px 20px;
+            text-align: left;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateX(5px);
+        }
+
+        .answer-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .answer-btn.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .answer-btn.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            padding: 12px 30px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .results-screen h2 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+            margin: 30px 0;
+        }
+
+        .score-message {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .score-breakdown {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .score-breakdown p {
+            font-size: 1.1em;
+            color: #444;
+            margin: 10px 0;
+        }
+
+        .review-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .review-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .review-item.correct {
+            border-left: 5px solid #4caf50;
+        }
+
+        .review-item.incorrect {
+            border-left: 5px solid #f44336;
+        }
+
+        .review-question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .review-answer {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .question h3 {
+                font-size: 1.1em;
+            }
+
+            .score-display {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Washington State Driver's License Practice Quiz</h1>
+            <p>Test your knowledge before taking the official exam</p>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="startScreen" class="start-screen">
+            <h2>Ready to Practice?</h2>
+            <p>This practice quiz will test your knowledge of Washington State driving laws, road signs, and safe driving practices. You'll answer 25 randomly selected questions from a comprehensive question bank.</p>
+            <p><strong>Instructions:</strong></p>
+            <ul style="text-align: left; max-width: 500px; margin: 20px auto; color: #666; line-height: 1.8;">
+                <li>Each quiz consists of 25 multiple-choice questions</li>
+                <li>Select one answer for each question</li>
+                <li>You'll receive immediate feedback after submitting</li>
+                <li>Review your answers at the end</li>
+                <li>You need 20/25 (80%) to pass the actual WA driver's test</li>
+            </ul>
+            <button class="btn" onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="quiz-screen">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+            
+            <div class="question-info">
+                <span>Question <span id="currentQuestion">1</span> of <span id="totalQuestions">25</span></span>
+                <span>Score: <span id="currentScore">0</span>/<span id="answeredQuestions">0</span></span>
+            </div>
+
+            <div class="question">
+                <h3 id="questionText"></h3>
+                <div id="answersContainer" class="answers"></div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">Previous</button>
+                <button class="btn" onclick="nextQuestion()" id="nextBtn">Next</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="results-screen">
+            <h2>Quiz Complete! 🎉</h2>
+            <div class="score-display" id="finalScore">0%</div>
+            <div class="score-message" id="scoreMessage"></div>
+            
+            <div class="score-breakdown">
+                <p><strong>Correct Answers:</strong> <span id="correctCount">0</span></p>
+                <p><strong>Incorrect Answers:</strong> <span id="incorrectCount">0</span></p>
+                <p><strong>Total Questions:</strong> <span id="totalCount">25</span></p>
+            </div>
+
+            <button class="btn" onclick="restartQuiz()">Take Another Quiz</button>
+            
+            <div id="reviewSection" class="review-section">
+                <h3 style="margin-bottom: 20px; color: #333;">Review Your Answers</h3>
+                <div id="reviewContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Question Bank - Based on Washington State Driver Guide
+        const questionBank = [
+            {
+                question: "What is the minimum age to apply for an instruction permit if you are NOT enrolling in a driver training course?",
+                answers: ["15 years old", "15½ years old", "16 years old", "18 years old"],
+                correct: 1
+            },
+            {
+                question: "New Washington residents who are licensed in another state have how many days to obtain a Washington State driver license?",
+                answers: ["15 days", "30 days", "60 days", "90 days"],
+                correct: 1
+            },
+            {
+                question: "What is the speed limit in a school zone?",
+                answers: ["15 mph", "20 mph", "25 mph", "30 mph"],
+                correct: 1
+            },
+            {
+                question: "For drivers age 21 and older, what Blood Alcohol Concentration (BAC) is considered DUI?",
+                answers: [".02%", ".05%", ".08%", ".10%"],
+                correct: 2
+            },
+            {
+                question: "For drivers under age 21, what BAC is considered DUI?",
+                answers: ["0.00%", "0.02%", "0.05%", "0.08%"],
+                correct: 1
+            },
+            {
+                question: "How far ahead should you signal before making a turn?",
+                answers: ["50 feet", "75 feet", "100 feet", "200 feet"],
+                correct: 2
+            },
+            {
+                question: "What is the minimum liability insurance requirement for bodily injury or death of one person?",
+                answers: ["$10,000", "$15,000", "$25,000", "$50,000"],
+                correct: 2
+            },
+            {
+                question: "When must you have your headlights on?",
+                answers: ["Only at night", "Half hour after sunset to half hour before sunrise", "When it's raining", "All of the above"],
+                correct: 1
+            },
+            {
+                question: "When following another vehicle at night, when should you switch from high beams to regular headlights?",
+                answers: ["100 feet", "200 feet", "300 feet", "500 feet"],
+                correct: 2
+            },
+            {
+                question: "When driving toward an oncoming vehicle at night, when should you dim your high beams?",
+                answers: ["300 feet", "400 feet", "500 feet", "600 feet"],
+                correct: 2
+            },
+            {
+                question: "How far should you park from a fire hydrant?",
+                answers: ["5 feet", "10 feet", "15 feet", "20 feet"],
+                correct: 2
+            },
+            {
+                question: "What does a solid yellow line on your side of the road mean?",
+                answers: ["You may pass if safe", "No passing allowed", "Caution area", "School zone"],
+                correct: 1
+            },
+            {
+                question: "What does a flashing red traffic light mean?",
+                answers: ["Slow down", "Proceed with caution", "Stop and proceed when safe", "Stop and wait for green"],
+                correct: 2
+            },
+            {
+                question: "At a four-way stop, who has the right-of-way?",
+                answers: ["The largest vehicle", "The vehicle on the right", "The first vehicle to arrive", "The vehicle going straight"],
+                correct: 2
+            },
+            {
+                question: "Children under age 2 must ride in what type of car seat?",
+                answers: ["Forward-facing", "Rear-facing", "Booster seat", "No seat required"],
+                correct: 1
+            },
+            {
+                question: "At what age can children use a regular seat belt instead of a booster seat?",
+                answers: ["Age 6", "Age 8", "When they reach 4'9\" tall", "Age 12"],
+                correct: 2
+            },
+            {
+                question: "When parking on a hill facing upward with a curb, which way should you turn your wheels?",
+                answers: ["Toward the curb", "Away from the curb", "Straight", "Either way is fine"],
+                correct: 1
+            },
+            {
+                question: "When parking on a hill facing downward, which way should you turn your wheels?",
+                answers: ["Away from the curb", "Straight", "Toward the curb", "Either way is fine"],
+                correct: 2
+            },
+            {
+                question: "How far from a railroad crossing must you stop?",
+                answers: ["5-10 feet", "10-15 feet", "15-50 feet", "50-100 feet"],
+                correct: 2
+            },
+            {
+                question: "What does a diamond-shaped sign indicate?",
+                answers: ["Railroad crossing", "Warning or caution", "Regulatory sign", "Construction zone"],
+                correct: 1
+            },
+            {
+                question: "What should you do if your vehicle starts to hydroplane?",
+                answers: ["Brake hard", "Accelerate", "Take foot off accelerator and brake gently", "Turn sharply"],
+                correct: 2
+            },
+            {
+                question: "When can you drive in an HOV lane with only one person in the vehicle?",
+                answers: ["Never", "If you're driving a motorcycle", "During off-peak hours", "If you're running late"],
+                correct: 1
+            },
+            {
+                question: "What does a red curb mean?",
+                answers: ["Loading zone", "No parking or stopping", "Short-term parking only", "Emergency vehicles only"],
+                correct: 1
+            },
+            {
+                question: "How many hours of behind-the-wheel driving practice must teens complete (40 day + 10 night)?",
+                answers: ["30 hours", "40 hours", "50 hours", "60 hours"],
+                correct: 2
+            },
+            {
+                question: "What is the intermediate license passenger restriction for the first 6 months?",
+                answers: ["No restrictions", "No passengers under 20 except immediate family", "Maximum 3 passengers", "No passengers at all"],
+                correct: 1
+            },
+            {
+                question: "What are the nighttime driving restrictions for intermediate license holders in the first 6 months?",
+                answers: ["No driving after midnight", "No driving between 1 a.m. and 5 a.m.", "No driving after 10 p.m.", "No nighttime restrictions"],
+                correct: 1
+            },
+            {
+                question: "When must you yield to pedestrians?",
+                answers: ["Only at marked crosswalks", "Only when they have a walk signal", "Always at all crosswalks", "Only if they make eye contact"],
+                correct: 2
+            },
+            {
+                question: "When passing a bicyclist, how much space must you leave?",
+                answers: ["1 foot", "2 feet", "At least 3 feet", "As much as possible"],
+                correct: 2
+            },
+            {
+                question: "What does a solid white line between lanes mean?",
+                answers: ["You cannot cross it", "You should stay in your lane unless necessary", "Carpool lane only", "Passing allowed"],
+                correct: 1
+            },
+            {
+                question: "What does double solid white lines mean?",
+                answers: ["Lane change recommended", "It is illegal to cross", "Carpool lane", "Passing zone"],
+                correct: 1
+            },
+            {
+                question: "When approaching a stopped school bus with flashing red lights, you must:",
+                answers: ["Slow down and proceed carefully", "Stop until lights stop flashing", "Change lanes and pass", "Honk and proceed"],
+                correct: 1
+            },
+            {
+                question: "If you are convicted of DUI, your license could be suspended for:",
+                answers: ["30 days", "60 days", "90 days to 4 years", "1 year exactly"],
+                correct: 2
+            },
+            {
+                question: "What is the maximum distance you should travel in a center turn lane?",
+                answers: ["100 feet", "200 feet", "300 feet", "500 feet"],
+                correct: 2
+            },
+            {
+                question: "When entering a roundabout, you should:",
+                answers: ["Speed up", "Yield to traffic already in the roundabout", "Honk your horn", "Stop and wait"],
+                correct: 1
+            },
+            {
+                question: "What should you do if an emergency vehicle with flashing lights approaches?",
+                answers: ["Speed up", "Stop immediately", "Pull to the right side and stop", "Change lanes"],
+                correct: 2
+            },
+            {
+                question: "Washington State requires you to pass a vision screening before getting your license. What vision aspect helps you spot vehicles out of the corner of your eye?",
+                answers: ["Central vision", "Night vision", "Peripheral vision", "Color vision"],
+                correct: 2
+            },
+            {
+                question: "What is the recommended hand position on the steering wheel?",
+                answers: ["12 and 6", "10 and 2 or 9 and 3", "11 and 1", "Anywhere comfortable"],
+                correct: 1
+            },
+            {
+                question: "If your vehicle's engine shuts off while driving, you should:",
+                answers: ["Turn the wheel sharply", "Brake hard immediately", "Keep grip on wheel, brake steadily, pull off road", "Coast to see if it restarts"],
+                correct: 2
+            },
+            {
+                question: "Fines for traffic violations in construction zones when workers are present are:",
+                answers: ["The same as regular", "50% higher", "Doubled", "Tripled"],
+                correct: 2
+            },
+            {
+                question: "At an uncontrolled intersection, you must yield if:",
+                answers: ["You're turning left", "A vehicle is already in the intersection", "You're entering a paved road from unpaved road", "All of the above"],
+                correct: 3
+            },
+            {
+                question: "What does a green arrow traffic signal mean?",
+                answers: ["Caution, yield to oncoming traffic", "You have the right-of-way in that direction", "Pedestrians have priority", "Slow down"],
+                correct: 1
+            },
+            {
+                question: "When should you use your hazard warning lights?",
+                answers: ["When parking", "When your car malfunctions or you make an emergency stop", "In heavy rain", "When driving slowly"],
+                correct: 1
+            },
+            {
+                question: "How often should you check your mirrors while driving?",
+                answers: ["Every 30 seconds", "Only when changing lanes", "Constantly, as part of visual scanning", "Once per minute"],
+                correct: 2
+            },
+            {
+                question: "If your license is expired for 8 or more years, what must you do to renew it?",
+                answers: ["Pay a higher fee", "Take a vision test", "Retake both knowledge and skills exams", "Just renew online"],
+                correct: 2
+            },
+            {
+                question: "The recommended following distance in good conditions is:",
+                answers: ["1 second", "2 seconds", "At least 3 seconds", "5 seconds"],
+                correct: 2
+            },
+            {
+                question: "Which vehicle has the biggest blind zones?",
+                answers: ["Sedans", "Motorcycles", "Large trucks and buses", "Sports cars"],
+                correct: 2
+            },
+            {
+                question: "When making a turn at an intersection, you should turn into:",
+                answers: ["Any available lane", "The lane closest to the direction you came from", "The far lane", "The center lane"],
+                correct: 1
+            },
+            {
+                question: "What is aggressive driving?",
+                answers: ["Driving too slowly", "Driving that endangers people or property", "Honking at other drivers", "Driving an aggressive-looking vehicle"],
+                correct: 1
+            },
+            {
+                question: "If convicted of street racing, penalties can include:",
+                answers: ["A warning only", "Fines, jail time, and vehicle impoundment", "Community service only", "Traffic school"],
+                correct: 1
+            },
+            {
+                question: "At night, you should drive at a speed that allows you to stop within:",
+                answers: ["100 feet", "The distance of your headlight beam (usually 400 feet)", "500 feet", "Your reaction time distance"],
+                correct: 1
+            },
+            {
+                question: "The 'Dutch Reach' method when opening your car door helps you:",
+                answers: ["Open the door faster", "See approaching bicyclists", "Lock the door more securely", "Clean the window"],
+                correct: 1
+            },
+            {
+                question: "Tire tread depth should not be less than:",
+                answers: ["1/16 inch", "2/32 inch", "1/8 inch", "1/4 inch"],
+                correct: 1
+            },
+            {
+                question: "What does a yellow diamond-shaped sign typically indicate?",
+                answers: ["Stop ahead", "Warning or caution", "No parking", "School zone"],
+                correct: 1
+            },
+            {
+                question: "For drivers 21+ with THC (cannabis) in their system, what level is considered DUI?",
+                answers: ["0 nanograms", "More than 5 nanograms per milliliter", "10 nanograms", "Any detectable amount"],
+                correct: 1
+            },
+            {
+                question: "For drivers under 21 with THC in their system, what level is considered DUI?",
+                answers: ["Anything above 0.00 ng", "5 nanograms", "10 nanograms", "Same as adults"],
+                correct: 0
+            },
+            {
+                question: "What is the purpose of zipper merging?",
+                answers: ["To go faster", "To improve traffic flow by 60% during lane closures", "To let faster cars pass", "To confuse other drivers"],
+                correct: 1
+            },
+            {
+                question: "It is illegal to hold any electronic device while driving. This law applies to:",
+                answers: ["Only new drivers", "Drivers under 21", "All drivers", "Only those without hands-free"],
+                correct: 2
+            },
+            {
+                question: "Motorcyclists often change positions within their lane to:",
+                answers: ["Show off", "See and be seen, and avoid road hazards", "Confuse other drivers", "Go faster"],
+                correct: 1
+            },
+            {
+                question: "Your instruction permit is valid for:",
+                answers: ["6 months", "1 year", "2 years", "Until you pass your skills test"],
+                correct: 1
+            },
+            {
+                question: "After passing your knowledge exam, how long do you have to complete the skills exam?",
+                answers: ["6 months", "1 year", "2 years", "No time limit"],
+                correct: 2
+            },
+            {
+                question: "What does the Implied Consent Law require?",
+                answers: ["You must carry your license", "You agree to be tested for alcohol/drugs if suspected of DUI", "You must stop for police", "You must have insurance"],
+                correct: 1
+            },
+            {
+                question: "When driving in a roundabout, large vehicles may:",
+                answers: ["Go clockwise", "Use both lanes", "Stop in the middle", "Go faster than other vehicles"],
+                correct: 1
+            },
+            {
+                question: "What does a fluorescent yellow-green sign indicate?",
+                answers: ["Construction zone", "School, pedestrian, and bicycle activity", "Hospital nearby", "No parking"],
+                correct: 1
+            },
+            {
+                question: "If a power line falls on your vehicle and a fire starts, you should:",
+                answers: ["Stay inside", "Step out carefully", "Jump clear with arms at sides, feet landing together", "Run away quickly"],
+                correct: 2
+            },
+            {
+                question: "How far should you stay away from a downed power line?",
+                answers: ["10 feet", "20 feet", "At least 35 feet", "50 feet"],
+                correct: 2
+            },
+            {
+                question: "On a multilane road with a school bus stopped with flashing red lights, who must stop?",
+                answers: ["Everyone", "Only vehicles behind the bus", "Only vehicles in the same direction as the bus", "Vehicles on both sides if less than 3 lanes"],
+                correct: 2
+            },
+            {
+                question: "The recommended speed in a roundabout is:",
+                answers: ["5-10 mph", "15-25 mph", "25-35 mph", "Match traffic speed"],
+                correct: 1
+            },
+            {
+                question: "What causes most collisions?",
+                answers: ["Vehicle defects", "Bad weather", "Too much speed, too little space, insufficient awareness", "Other drivers"],
+                correct: 2
+            },
+            {
+                question: "When backing up your vehicle, you should:",
+                answers: ["Use only mirrors", "Turn your body to see behind", "Rely on backup camera only", "Use peripheral vision"],
+                correct: 1
+            },
+            {
+                question: "If you're involved in a collision, you must file a collision report form within:",
+                answers: ["24 hours", "48 hours", "4 days", "1 week"],
+                correct: 2
+            },
+            {
+                question: "What is road rage?",
+                answers: ["Driving fast", "Angry, violent response leading to aggressive behavior", "Honking at others", "Being upset about traffic"],
+                correct: 1
+            },
+            {
+                question: "Intermediate license holders can use cell phones for:",
+                answers: ["Emergency calls only", "Hands-free calling", "Text messaging", "Cannot use phones at all, even hands-free"],
+                correct: 3
+            },
+            {
+                question: "In Washington, recreational marijuana use is legal for those:",
+                answers: ["18 and over", "21 and over", "With a medical card", "Never while driving"],
+                correct: 1
+            },
+            {
+                question: "Driving after consuming cannabis is:",
+                answers: ["Legal if over 21", "Legal in small amounts", "Illegal for all ages", "Legal with a prescription"],
+                correct: 2
+            },
+            {
+                question: "Studded tires can be used in Washington during:",
+                answers: ["All year", "Winter months only (Nov 1 - Mar 31)", "Any time it snows", "They are illegal"],
+                correct: 1
+            },
+            {
+                question: "When approaching a curve, you should:",
+                answers: ["Speed up", "Brake while turning", "Reduce speed before entering the curve", "Maintain same speed"],
+                correct: 2
+            },
+            {
+                question: "If you start to skid, you should:",
+                answers: ["Brake hard", "Accelerate", "Steer in the direction you want to go", "Turn the wheel sharply"],
+                correct: 2
+            },
+            {
+                question: "What is the beach speed limit in Washington where driving is allowed?",
+                answers: ["15 mph", "20 mph", "25 mph", "35 mph"],
+                correct: 2
+            },
+            {
+                question: "When must a Washington resident update their address with DOL?",
+                answers: ["Within 5 days", "Within 10 days", "Within 30 days", "At next renewal"],
+                correct: 1
+            },
+            {
+                question: "How far from a crosswalk must you stop?",
+                answers: ["At or before the stop line or crosswalk", "10 feet before", "Right at the crosswalk", "Anywhere that's convenient"],
+                correct: 0
+            },
+            {
+                question: "The OODA loop stands for:",
+                answers: ["Obey, Operate, Drive, Accelerate", "Observe, Orient, Decide, Act", "Order, Organize, Deliver, Assess", "Open, Observe, Direct, Advance"],
+                correct: 1
+            },
+            {
+                question: "What is the main benefit of Antilock Braking System (ABS)?",
+                answers: ["Shorter stopping distance", "Allows you to steer while braking in emergency", "Quieter braking", "Less brake wear"],
+                correct: 1
+            },
+            {
+                question: "License Express allows you to:",
+                answers: ["Take your driving test", "Schedule appointments and renew licenses", "Get a free license", "Avoid insurance requirements"],
+                correct: 1
+            },
+            {
+                question: "What color are bike lanes typically painted?",
+                answers: ["Yellow", "White", "Green", "Blue"],
+                correct: 2
+            },
+            {
+                question: "Sharrows indicate:",
+                answers: ["Bike-only lane", "Shared lane for cars and bikes", "No bikes allowed", "Passing zone"],
+                correct: 1
+            },
+            {
+                question: "When can you turn right on a red light?",
+                answers: ["Never", "After complete stop if no 'no turn on red' sign", "Anytime if no traffic", "Only with a green arrow"],
+                correct: 1
+            },
+            {
+                question: "At a traffic signal that is not working, you should:",
+                answers: ["Go quickly through", "Treat it as a four-way stop", "Yield to larger vehicles", "Wait for police"],
+                correct: 1
+            },
+            {
+                question: "Your chest should be at least how many inches from the steering wheel for airbag safety?",
+                answers: ["6 inches", "8 inches", "10 inches", "12 inches"],
+                correct: 2
+            },
+            {
+                question: "Children under age 13 should:",
+                answers: ["Sit in front seat", "Never ride in front seat", "Sit in front with airbag off", "Use booster seats in front"],
+                correct: 1
+            },
+            {
+                question: "What is required to get an Intermediate Driver License (ages 16-17)?",
+                answers: ["Pass knowledge exam only", "Have permit for 6 months, complete traffic safety course, pass both exams", "Just turn 16", "Have permit for 3 months"],
+                correct: 1
+            },
+            {
+                question: "Agricultural permits allow those under 18 to:",
+                answers: ["Drive anywhere", "Drive for farm work in specific areas", "Replace instruction permit", "Drive without a license"],
+                correct: 1
+            },
+            {
+                question: "Polydrug use refers to:",
+                answers: ["Using prescription drugs", "Mixing or taking more than one drug at a time", "Using over-the-counter medications", "Using drugs over time"],
+                correct: 1
+            },
+            {
+                question: "Fatigue while driving can cause:",
+                answers: ["Better focus", "Impaired vision and judgment similar to alcohol/drugs", "Faster reactions", "Improved decision making"],
+                correct: 1
+            },
+            {
+                question: "If you feel drowsy while driving, you should:",
+                answers: ["Drink coffee and keep driving", "Open windows", "Pull over and take a 20-minute nap", "Drive faster to stay awake"],
+                correct: 2
+            },
+            {
+                question: "Most people need how many hours of sleep to stay alert?",
+                answers: ["4-6 hours", "5-7 hours", "7-9 hours", "9-11 hours"],
+                correct: 2
+            },
+            {
+                question: "The three types of vision used while driving are:",
+                answers: ["Near, far, and side", "Central, fringe, and peripheral", "Color, night, and day", "Forward, backward, and lateral"],
+                correct: 1
+            },
+            {
+                question: "It is illegal to drive while wearing:",
+                answers: ["Glasses", "Earbuds in both ears", "A hat", "Contact lenses"],
+                correct: 1
+            },
+            {
+                question: "When changing lanes, you should:",
+                answers: ["Signal, check mirrors only", "Signal, check mirrors and blind spot", "Just check mirrors", "Move quickly without signaling"],
+                correct: 1
+            },
+            {
+                question: "If your brakes fail, you should:",
+                answers: ["Pull parking brake hard immediately", "Pump the brakes, shift to lower gear, use parking brake gradually", "Jump out of the car", "Keep driving to a mechanic"],
+                correct: 1
+            },
+            {
+                question: "When parking parallel, your vehicle should be no more than how many inches from the curb?",
+                answers: ["6 inches", "8 inches", "12 inches", "18 inches"],
+                correct: 2
+            },
+            {
+                question: "You may not park within how many feet of a fire station driveway on the same side?",
+                answers: ["15 feet", "20 feet", "50 feet", "75 feet"],
+                correct: 1
+            },
+            {
+                question: "A white curb marking typically means:",
+                answers: ["No parking", "Loading zone", "Short stops permitted", "Fire lane"],
+                correct: 2
+            },
+            {
+                question: "A vehicle displaying a triangular orange emblem is:",
+                answers: ["An emergency vehicle", "A slow-moving vehicle (25 mph or less)", "A school bus", "Under repair"],
+                correct: 1
+            },
+            {
+                question: "Trains always have the right-of-way and can take up to how long to stop?",
+                answers: ["100 feet", "500 feet", "1 mile", "2 miles"],
+                correct: 2
+            }
+        ];
+
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        function startQuiz() {
+            // Select 25 random questions
+            currentQuestions = selectRandomQuestions(questionBank, 25);
+            currentQuestionIndex = 0;
+            userAnswers = new Array(25).fill(null);
+            score = 0;
+
+            // Show quiz screen
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('resultsScreen').style.display = 'none';
+
+            // Display first question
+            displayQuestion();
+        }
+
+        function selectRandomQuestions(bank, count) {
+            const shuffled = [...bank].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, count);
+        }
+
+        function displayQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = currentQuestions.length;
+            
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('answeredQuestions').textContent = answeredCount;
+
+            // Display question text
+            document.getElementById('questionText').textContent = question.question;
+
+            // Display answers
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
+
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer;
+                
+                // Check if this question was already answered
+                if (userAnswers[currentQuestionIndex] !== null) {
+                    button.disabled = true;
+                    if (index === userAnswers[currentQuestionIndex]) {
+                        button.classList.add(index === question.correct ? 'correct' : 'incorrect');
+                    }
+                    if (index === question.correct) {
+                        button.classList.add('correct');
+                    }
+                } else {
+                    button.onclick = () => selectAnswer(index);
+                }
+
+                answersContainer.appendChild(button);
+            });
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').textContent = 
+                currentQuestionIndex === currentQuestions.length - 1 ? 'Finish' : 'Next';
+        }
+
+        function selectAnswer(answerIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            userAnswers[currentQuestionIndex] = answerIndex;
+
+            // Update score
+            if (answerIndex === question.correct) {
+                score++;
+            }
+
+            // Update answer buttons
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach((button, index) => {
+                button.disabled = true;
+                if (index === answerIndex) {
+                    button.classList.add(index === question.correct ? 'correct' : 'incorrect');
+                }
+                if (index === question.correct) {
+                    button.classList.add('correct');
+                }
+            });
+
+            // Update score display
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById('currentScore').textContent = score;
+            document.getElementById('answeredQuestions').textContent = answeredCount;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+
+        function showResults() {
+            // Hide quiz screen, show results
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+
+            // Calculate and display score
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            document.getElementById('finalScore').textContent = percentage + '%';
+
+            // Display message based on score
+            let message = '';
+            if (percentage >= 80) {
+                message = '🎉 Excellent! You passed! You\'re ready for the real test!';
+            } else if (percentage >= 70) {
+                message = '👍 Good job! Study a bit more to ensure you pass the real test.';
+            } else if (percentage >= 60) {
+                message = '📚 Keep studying! You need 80% to pass the actual test.';
+            } else {
+                message = '📖 More practice needed. Review the Driver Guide and try again!';
+            }
+            document.getElementById('scoreMessage').textContent = message;
+
+            // Display breakdown
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('incorrectCount').textContent = currentQuestions.length - score;
+            document.getElementById('totalCount').textContent = currentQuestions.length;
+
+            // Display review
+            displayReview();
+        }
+
+        function displayReview() {
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            currentQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === question.correct;
+
+                const reviewItem = document.createElement('div');
+                reviewItem.className = 'review-item ' + (isCorrect ? 'correct' : 'incorrect');
+
+                const questionText = document.createElement('div');
+                questionText.className = 'review-question';
+                questionText.textContent = `${index + 1}. ${question.question}`;
+
+                const yourAnswer = document.createElement('div');
+                yourAnswer.className = 'review-answer';
+                yourAnswer.innerHTML = `<strong>Your answer:</strong> ${userAnswer !== null ? question.answers[userAnswer] : 'Not answered'} ${isCorrect ? '✓' : '✗'}`;
+
+                const correctAnswer = document.createElement('div');
+                correctAnswer.className = 'review-answer';
+                correctAnswer.innerHTML = `<strong>Correct answer:</strong> ${question.answers[question.correct]}`;
+
+                reviewItem.appendChild(questionText);
+                reviewItem.appendChild(yourAnswer);
+                if (!isCorrect) {
+                    reviewItem.appendChild(correctAnswer);
+                }
+
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        function restartQuiz() {
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
