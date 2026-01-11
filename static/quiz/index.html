@@ -33,6 +33,176 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
+            position: relative;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #667eea;
+            border: none;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: background 0.2s;
+        }
+
+        .menu-btn:hover {
+            background: #764ba2;
+        }
+
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        .menu-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            padding: 30px;
+        }
+
+        .menu-panel.active {
+            right: 0;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .menu-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+
+        .menu-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .menu-section:last-child {
+            border-bottom: none;
+        }
+
+        .menu-section h3 {
+            color: #667eea;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .menu-stat {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+
+        .menu-stat-label {
+            color: #666;
+        }
+
+        .menu-stat-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .menu-history-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .menu-history-date {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .menu-history-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-history-details {
+            color: #666;
+        }
+
+        .menu-history-percent {
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.9em;
+        }
+
+        .menu-history-percent.passed {
+            background: #4caf50;
+            color: white;
+        }
+
+        .menu-history-percent.failed {
+            background: #f44336;
+            color: white;
+        }
+
+        .menu-btn-group {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        .menu-btn-group .btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.95em;
+        }
+
+        .menu-btn-clear {
+            background: #f44336;
+        }
+
+        .menu-btn-clear:hover {
+            background: #d32f2f;
+        }
+
+        .menu-empty-message {
+            color: #999;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
         }
 
         .header h1 {
@@ -349,6 +519,11 @@
         }
 
         @media (max-width: 768px) {
+            .menu-panel {
+                width: 100%;
+                right: -100%;
+            }
+
             .container {
                 padding: 20px;
             }
@@ -383,23 +558,75 @@
 <body>
     <div class="container">
         <div class="header">
+            <button class="menu-btn" onclick="toggleMenu()" title="View progress and settings">☰</button>
             <h1>🚗 Washington State Driver's License Practice Quiz</h1>
             <p>Test your knowledge before taking the official exam</p>
+        </div>
+
+        <!-- Menu Overlay -->
+        <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+        <!-- Menu Panel -->
+        <div id="menuPanel" class="menu-panel">
+            <button class="menu-close" onclick="closeMenu()">✕</button>
+            <h2 class="menu-title">📊 Your Progress</h2>
+
+            <!-- Stats Section -->
+            <div class="menu-section">
+                <h3>Statistics</h3>
+                <div class="menu-stat">
+                    <span class="menu-stat-label">Total Quizzes:</span>
+                    <span class="menu-stat-value" id="menuTotalQuizzes">0</span>
+                </div>
+                <div class="menu-stat">
+                    <span class="menu-stat-label">Best Score:</span>
+                    <span class="menu-stat-value" id="menuBestScore">0%</span>
+                </div>
+                <div class="menu-stat">
+                    <span class="menu-stat-label">Average Score:</span>
+                    <span class="menu-stat-value" id="menuAverageScore">0%</span>
+                </div>
+                <div class="menu-stat">
+                    <span class="menu-stat-label">Pass Rate (80%+):</span>
+                    <span class="menu-stat-value" id="menuPassRate">0%</span>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="menu-section">
+                <h3>Recent Quiz Results</h3>
+                <div id="menuHistoryContainer"></div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="menu-section">
+                <div class="menu-btn-group">
+                    <button class="btn menu-btn-clear" onclick="clearHistoryFromMenu()">Clear All Results</button>
+                </div>
+            </div>
         </div>
 
         <!-- Start Screen -->
         <div id="startScreen" class="start-screen">
             <h2>Ready to Practice?</h2>
-            <p>This practice quiz will test your knowledge of Washington State driving laws, road signs, and safe driving practices. You'll answer 25 randomly selected questions from a comprehensive question bank.</p>
+            <p>This practice quiz will test your knowledge of Washington State driving laws, road signs, and safe driving practices.</p>
             <p><strong>Instructions:</strong></p>
             <ul style="text-align: left; max-width: 500px; margin: 20px auto; color: #666; line-height: 1.8;">
-                <li>Each quiz consists of 25 multiple-choice questions</li>
                 <li>Select one answer for each question</li>
                 <li>You'll receive immediate feedback after submitting</li>
                 <li>Review your answers at the end</li>
-                <li>You need 20/25 (80%) to pass the actual WA driver's test</li>
+                <li>You need 80% to pass the actual WA driver's test</li>
             </ul>
-            <button class="btn" onclick="startQuiz()">Start Quiz</button>
+            
+            <p style="margin-top: 30px; color: #333; font-weight: 600;">Choose Your Quiz Length:</p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px; flex-wrap: wrap;">
+                <button class="btn" onclick="startQuiz(20)" style="flex: 1; min-width: 150px;">
+                    📝 Quick Test<br><span style="font-size: 0.85em; opacity: 0.9;">20 Questions</span>
+                </button>
+                <button class="btn" onclick="startQuiz(40)" style="flex: 1; min-width: 150px;">
+                    📚 Full Test<br><span style="font-size: 0.85em; opacity: 0.9;">40 Questions</span>
+                </button>
+            </div>
         </div>
 
         <!-- Quiz Screen -->
@@ -1529,11 +1756,105 @@
             }
         }
 
-        function startQuiz() {
-            // Select 25 random questions
-            currentQuestions = selectRandomQuestions(questionBank, 25);
+        // Menu functions
+        function toggleMenu() {
+            const menuPanel = document.getElementById('menuPanel');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            menuPanel.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            
+            if (menuPanel.classList.contains('active')) {
+                updateMenuStats();
+                displayMenuHistory();
+            }
+        }
+
+        function closeMenu() {
+            const menuPanel = document.getElementById('menuPanel');
+            const menuOverlay = document.getElementById('menuOverlay');
+            
+            menuPanel.classList.remove('active');
+            menuOverlay.classList.remove('active');
+        }
+
+        function updateMenuStats() {
+            const stats = calculateStats();
+            document.getElementById('menuTotalQuizzes').textContent = stats.totalQuizzes;
+            document.getElementById('menuBestScore').textContent = stats.bestScore + '%';
+            document.getElementById('menuAverageScore').textContent = stats.averageScore + '%';
+            document.getElementById('menuPassRate').textContent = stats.passRate + '%';
+        }
+
+        function displayMenuHistory() {
+            const history = getQuizHistory();
+            const historyContainer = document.getElementById('menuHistoryContainer');
+            historyContainer.innerHTML = '';
+
+            if (history.length === 0) {
+                historyContainer.innerHTML = '<div class="menu-empty-message">No quiz history yet. Complete a quiz to see your results here!</div>';
+                return;
+            }
+
+            // Display most recent 5 quizzes
+            const recentHistory = [...history].reverse().slice(0, 5);
+            
+            recentHistory.forEach((result) => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'menu-history-item';
+
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'menu-history-date';
+                dateDiv.textContent = result.date;
+
+                const scoreDiv = document.createElement('div');
+                scoreDiv.className = 'menu-history-score';
+
+                const details = document.createElement('span');
+                details.className = 'menu-history-details';
+                details.textContent = `${result.correct}/${result.total} correct`;
+
+                const percentage = document.createElement('span');
+                percentage.className = `menu-history-percent ${result.percentage >= 80 ? 'passed' : 'failed'}`;
+                percentage.textContent = result.percentage + '%';
+
+                scoreDiv.appendChild(details);
+                scoreDiv.appendChild(percentage);
+
+                historyItem.appendChild(dateDiv);
+                historyItem.appendChild(scoreDiv);
+                historyContainer.appendChild(historyItem);
+            });
+
+            // Show message if more than 5 results
+            if (history.length > 5) {
+                const moreDiv = document.createElement('div');
+                moreDiv.style.textAlign = 'center';
+                moreDiv.style.color = '#999';
+                moreDiv.style.fontSize = '0.85em';
+                moreDiv.style.marginTop = '10px';
+                moreDiv.textContent = `... and ${history.length - 5} more quiz(zes)`;
+                historyContainer.appendChild(moreDiv);
+            }
+        }
+
+        function clearHistoryFromMenu() {
+            if (confirm('Are you sure you want to clear all score history? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                updateMenuStats();
+                displayMenuHistory();
+                alert('Score history has been cleared.');
+            }
+        }
+
+        function startQuiz(quizLength = 25) {
+            // Close menu if open
+            closeMenu();
+            
+            // Select random questions based on chosen length
+            currentQuestions = selectRandomQuestions(questionBank, quizLength);
             currentQuestionIndex = 0;
-            userAnswers = new Array(25).fill(null);
+            userAnswers = new Array(quizLength).fill(null);
             score = 0;
 
             // Show quiz screen
